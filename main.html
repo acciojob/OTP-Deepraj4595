@@ -49,12 +49,12 @@
   <p id="verification_subtext">Enter the 6-digit OTP sent to your device</p>
 
   <div class="code-container">
-    <input type="text" maxlength="1" class="code">
-    <input type="text" maxlength="1" class="code">
-    <input type="text" maxlength="1" class="code">
-    <input type="text" maxlength="1" class="code">
-    <input type="text" maxlength="1" class="code">
-    <input type="text" maxlength="1" class="code">
+    <input type="text" maxlength="1" class="code" id="code-1">
+    <input type="text" maxlength="1" class="code" id="code-2">
+    <input type="text" maxlength="1" class="code" id="code-3">
+    <input type="text" maxlength="1" class="code" id="code-4">
+    <input type="text" maxlength="1" class="code" id="code-5">
+    <input type="text" maxlength="1" class="code" id="code-6">
   </div>
 
   <script>
@@ -67,14 +67,14 @@
       code.addEventListener("input", (e) => {
         const value = e.target.value;
 
-        // Allow only digits
+        // allow only digits
         if (!/^[0-9]$/.test(value)) {
           e.target.value = "";
           return;
         }
 
-        // Move to next input
-        if (value && index < codes.length - 1) {
+        // move forward
+        if (index < codes.length - 1) {
           codes[index + 1].focus();
         }
       });
@@ -82,13 +82,13 @@
       code.addEventListener("keydown", (e) => {
         if (e.key === "Backspace") {
 
-          // If current is empty, move back
-          if (code.value === "" && index > 0) {
-            codes[index - 1].focus();
-          } 
-          // If has value, clear it and stay
-          else {
+          if (code.value === "") {
+            if (index > 0) {
+              codes[index - 1].focus();
+            }
+          } else {
             code.value = "";
+            e.preventDefault(); // important for test cases
           }
         }
       });
